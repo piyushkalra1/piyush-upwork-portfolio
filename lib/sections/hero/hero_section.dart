@@ -46,13 +46,7 @@ class _HeroSectionState extends State<HeroSection> with SingleTickerProviderStat
     }
   }
 
-  Future<void> _downloadResume() async {
-    const url = 'assets/assets/resume/Piyush_Kalra_Resume.pdf';
-    final uri = Uri.parse(url);
-    if (await launchUrl(uri)) {
-      // PDF opened
-    }
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -442,7 +436,7 @@ class _HeroSectionState extends State<HeroSection> with SingleTickerProviderStat
           ),
         ),
         OutlinedButton(
-          onPressed: _downloadResume,
+          onPressed: () => widget.onActionPressed("Contact"),
           style: OutlinedButton.styleFrom(
             foregroundColor: Colors.white,
             side: const BorderSide(color: Color(0x33FFFFFF), width: 1.3),
@@ -455,10 +449,10 @@ class _HeroSectionState extends State<HeroSection> with SingleTickerProviderStat
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: const [
-              Icon(Icons.download_rounded, size: 18, color: AppColors.secondaryAccent),
+              Icon(Icons.handshake_outlined, size: 18, color: AppColors.secondaryAccent),
               SizedBox(width: 8),
               Text(
-                "Download Resume",
+                "Hire on Upwork",
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
               ),
             ],
@@ -472,11 +466,31 @@ class _HeroSectionState extends State<HeroSection> with SingleTickerProviderStat
     return Row(
       mainAxisAlignment: center ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: [
-        _buildSocialIcon(Icons.work_outline_rounded, AppStrings.linkedinUrl, "LinkedIn"),
+        _buildSocialIcon(Icons.code, AppStrings.githubUrl, "GitHub"),
         const SizedBox(width: 14),
-        _buildSocialIcon(Icons.email_outlined, "mailto:${AppStrings.emailAddress}", "Email"),
-        const SizedBox(width: 14),
-        _buildSocialIcon(Icons.phone_outlined, "tel:${AppStrings.phoneNumber.replaceAll(' ', '')}", "Phone"),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+          decoration: BoxDecoration(
+            color: AppColors.greenAccent.withOpacity(0.12),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: AppColors.greenAccent.withOpacity(0.3), width: 1),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+              Icon(Icons.verified, size: 16, color: AppColors.greenAccent),
+              SizedBox(width: 6),
+              Text(
+                "Upwork Verified Freelancer",
+                style: TextStyle(
+                  color: AppColors.greenAccent,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     ).animate().fadeIn(delay: 750.ms, duration: 500.ms);
   }

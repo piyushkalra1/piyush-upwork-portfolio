@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:portfolio/constants/colors.dart';
 import 'package:portfolio/constants/strings.dart';
@@ -8,7 +7,8 @@ import 'package:portfolio/widgets/glass_card.dart';
 
 class ResumeSection extends StatefulWidget {
   final ValueChanged<double> onVisible;
-  const ResumeSection({super.key, required this.onVisible});
+  final VoidCallback? onHirePressed;
+  const ResumeSection({super.key, required this.onVisible, this.onHirePressed});
 
   @override
   State<ResumeSection> createState() => _ResumeSectionState();
@@ -16,14 +16,6 @@ class ResumeSection extends StatefulWidget {
 
 class _ResumeSectionState extends State<ResumeSection> {
   bool _animate = false;
-
-  Future<void> _downloadResume() async {
-    const url = 'assets/assets/resume/Piyush_Kalra_Resume.pdf';
-    final uri = Uri.parse(url);
-    if (await launchUrl(uri)) {
-      // PDF opened in browser tab / download triggered
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +85,7 @@ class _ResumeSectionState extends State<ResumeSection> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "RESUME & CREDENTIALS",
+          "CREDENTIALS & EXPERIENCE",
           style: textTheme.labelLarge?.copyWith(
             color: AppColors.primaryAccent,
             letterSpacing: 1.5,
@@ -102,7 +94,7 @@ class _ResumeSectionState extends State<ResumeSection> {
         ),
         const SizedBox(height: 8),
         Text(
-          "Curriculum Vitae",
+          "Professional Profile",
           style: textTheme.displayMedium?.copyWith(
             fontWeight: FontWeight.bold,
             letterSpacing: -1.0,
@@ -177,7 +169,7 @@ class _ResumeSectionState extends State<ResumeSection> {
           ),
           const SizedBox(height: 8),
           Text(
-            "${AppStrings.devLocation} | ${AppStrings.phoneNumber} | ${AppStrings.emailAddress}",
+            "${AppStrings.devLocation} | Upwork Verified Freelancer | 100% Quality Focus",
             style: textTheme.bodySmall?.copyWith(color: AppColors.textMuted, fontSize: 11.5),
           ),
           const SizedBox(height: 20),
@@ -312,10 +304,10 @@ class _ResumeSectionState extends State<ResumeSection> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: const [
-              Icon(Icons.description_rounded, size: 14, color: AppColors.secondaryAccent),
+              Icon(Icons.work_outline_rounded, size: 14, color: AppColors.secondaryAccent),
               SizedBox(width: 6),
               Text(
-                "UPDATED 2026 RESUME",
+                "VERIFIED CREDENTIALS",
                 style: TextStyle(
                   color: AppColors.secondaryAccent,
                   fontWeight: FontWeight.bold,
@@ -328,7 +320,7 @@ class _ResumeSectionState extends State<ResumeSection> {
         ),
         const SizedBox(height: 18),
         Text(
-          "Get the Official 4-Year ATS Resume",
+          "Available for Your Next Project",
           textAlign: center ? TextAlign.center : TextAlign.left,
           style: textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.bold,
@@ -338,7 +330,7 @@ class _ResumeSectionState extends State<ResumeSection> {
         ),
         const SizedBox(height: 14),
         Text(
-          "Download the official printable 2-page ATS resume detailing all 15+ production applications, technical stack (BLoC, Provider, GetX, Clean Architecture, Supabase, Firebase), store release metrics, and client deliverables.",
+          "Ready to deliver high-performance mobile applications on Upwork. Specializing in Clean Architecture, state management (BLoC, Provider, GetX), IoT/NFC integrations, and seamless store release pipelines.",
           textAlign: center ? TextAlign.center : TextAlign.left,
           style: textTheme.bodyLarge?.copyWith(
             color: AppColors.textSecondary,
@@ -364,7 +356,7 @@ class _ResumeSectionState extends State<ResumeSection> {
             ],
           ),
           child: ElevatedButton(
-            onPressed: _downloadResume,
+            onPressed: widget.onHirePressed,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
@@ -375,10 +367,10 @@ class _ResumeSectionState extends State<ResumeSection> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: const [
-                Icon(Icons.download_rounded, size: 20),
+                Icon(Icons.handshake_outlined, size: 20),
                 SizedBox(width: 10),
                 Text(
-                  "Download Resume PDF",
+                  "Work With Me on Upwork",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
               ],

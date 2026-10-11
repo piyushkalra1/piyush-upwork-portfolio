@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -8,12 +9,12 @@ import 'package:portfolio/widgets/glass_card.dart';
 
 class ContactSection extends StatefulWidget {
   final ValueChanged<double> onVisible;
-  final VoidCallback onDownloadResume;
+  final VoidCallback? onDownloadResume;
 
   const ContactSection({
     super.key,
     required this.onVisible,
-    required this.onDownloadResume,
+    this.onDownloadResume,
   });
 
   @override
@@ -49,19 +50,14 @@ class _ContactSectionState extends State<ContactSection> {
   void _submitForm() async {
     if (_formKey.currentState?.validate() ?? false) {
       final name = _nameController.text.trim();
-      final email = _emailController.text.trim();
+      final platform = _emailController.text.trim();
       final subject = _subjectController.text.trim().isNotEmpty
           ? _subjectController.text.trim()
-          : "Portfolio Inquiry from $name";
+          : "Upwork Project Inquiry";
       final message = _messageController.text.trim();
 
-      final mailtoUri = Uri(
-        scheme: 'mailto',
-        path: AppStrings.emailAddress,
-        query: 'subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent("Hi Piyush,\n\n$message\n\nBest regards,\n$name\n$email")}',
-      );
-
-      await launchUrl(mailtoUri);
+      final inquiryText = "Project: $subject\nClient/Team: $name\nTarget Platform: $platform\nDetails:\n$message";
+      await Clipboard.setData(ClipboardData(text: inquiryText));
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -70,9 +66,11 @@ class _ContactSectionState extends State<ContactSection> {
               children: const [
                 Icon(Icons.check_circle, color: Colors.white),
                 SizedBox(width: 12),
-                Text(
-                  "Opening your email app to send message! Thank you.",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Text(
+                    "Project brief copied to clipboard! Paste directly into Upwork Messages.",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
               ],
             ),
@@ -198,15 +196,17 @@ class _ContactSectionState extends State<ContactSection> {
         ),
         const SizedBox(height: 16),
         Text(
-          "I'm currently open to new senior opportunities, contract work, and custom mobile integrations. Feel free to reach out via email or phone!",
+          "I'm currently available for full-time and hourly contracts on Upwork. Let's discuss your project scope, milestones, and deliver high-performance applications!",
           style: textTheme.bodyLarge?.copyWith(color: AppColors.textSecondary),
         ),
         const SizedBox(height: 32),
 
         // Quick contacts
-        _buildInfoTile(Icons.email_outlined, "Email Me", AppStrings.emailAddress, "mailto:${AppStrings.emailAddress}"),
+        _buildInfoTile(Icons.verified, "Platform", "Upwork Verified Freelancer", null),
         const SizedBox(height: 16),
-        _buildInfoTile(Icons.phone_iphone_outlined, "Call Me", AppStrings.phoneNumber, "tel:${AppStrings.phoneNumber.replaceAll(' ', '')}"),
+        _buildInfoTile(Icons.schedule_outlined, "Availability", "Full-Time & Hourly Contracts", null),
+        const SizedBox(height: 16),
+        _buildInfoTile(Icons.bolt_outlined, "Response Time", "Quick Response (Within 2-4 Hours)", null),
         const SizedBox(height: 16),
         _buildInfoTile(Icons.location_on_outlined, "Location", AppStrings.devLocation, null),
         const SizedBox(height: 32),
@@ -217,11 +217,28 @@ class _ContactSectionState extends State<ContactSection> {
           runSpacing: 12,
           children: [
             _buildSocialIcon(Icons.code, AppStrings.githubUrl, "GitHub"),
-            _buildSocialIcon(Icons.work_outline, AppStrings.linkedinUrl, "LinkedIn"),
-            const SizedBox(width: 8),
-            OutlinedButton(
-              onPressed: widget.onDownloadResume,
-              child: const Text("View Resume"),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+              decoration: BoxDecoration(
+                color: AppColors.greenAccent.withOpacity(0.12),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: AppColors.greenAccent.withOpacity(0.3), width: 1),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  Icon(Icons.shield_outlined, size: 16, color: AppColors.greenAccent),
+                  SizedBox(width: 6),
+                  Text(
+                    "Upwork Safe & Verified",
+                    style: TextStyle(
+                      color: AppColors.greenAccent,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -300,9 +317,35 @@ class _ContactSectionState extends State<ContactSection> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    "Start a Project on Upwork",
+                    style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryAccent.withOpacity(0.12),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Text(
+                    "Upwork TOS Safe",
+                    style: TextStyle(
+                      color: AppColors.secondaryAccent,
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
             Text(
-              "Send a Message",
-              style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              "To comply with Upwork Terms of Service, all initial client inquiries and contract engagements are conducted securely through Upwork Messages. Prepare your brief below to copy directly into Upwork:",
+              style: textTheme.bodySmall?.copyWith(color: AppColors.textMuted, height: 1.4),
             ),
             const SizedBox(height: 24),
             
@@ -311,35 +354,30 @@ class _ContactSectionState extends State<ContactSection> {
               controller: _nameController,
               keyboardType: TextInputType.name,
               decoration: const InputDecoration(
-                labelText: "Name",
-                hintText: "Enter your name",
+                labelText: "Your Name / Organization",
+                hintText: "Enter your name or company",
                 prefixIcon: Icon(Icons.person_outline, size: 20, color: AppColors.textMuted),
               ),
               validator: (val) {
                 if (val == null || val.trim().isEmpty) {
-                  return "Please enter your name";
+                  return "Please enter your name or company";
                 }
                 return null;
               },
             ),
             const SizedBox(height: 20),
 
-            // Email Field
+            // Platform Field
             TextFormField(
               controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
-                labelText: "Email",
-                hintText: "Enter your email address",
-                prefixIcon: Icon(Icons.email_outlined, size: 20, color: AppColors.textMuted),
+                labelText: "Target Platform",
+                hintText: "e.g. Flutter (Android & iOS) / Web",
+                prefixIcon: Icon(Icons.devices_outlined, size: 20, color: AppColors.textMuted),
               ),
               validator: (val) {
                 if (val == null || val.trim().isEmpty) {
-                  return "Please enter your email";
-                }
-                final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                if (!emailRegExp.hasMatch(val.trim())) {
-                  return "Please enter a valid email address";
+                  return "Please specify target platform";
                 }
                 return null;
               },
@@ -350,13 +388,13 @@ class _ContactSectionState extends State<ContactSection> {
             TextFormField(
               controller: _subjectController,
               decoration: const InputDecoration(
-                labelText: "Subject",
-                hintText: "What is this regarding?",
+                labelText: "Project Title",
+                hintText: "What is your project about?",
                 prefixIcon: Icon(Icons.subject_outlined, size: 20, color: AppColors.textMuted),
               ),
               validator: (val) {
                 if (val == null || val.trim().isEmpty) {
-                  return "Please enter a subject";
+                  return "Please enter a project title";
                 }
                 return null;
               },
@@ -368,8 +406,8 @@ class _ContactSectionState extends State<ContactSection> {
               controller: _messageController,
               maxLines: 5,
               decoration: const InputDecoration(
-                labelText: "Message",
-                hintText: "Type your message here...",
+                labelText: "Project Scope & Details",
+                hintText: "Describe features, timeline, and key goals...",
                 alignLabelWithHint: true,
                 prefixIcon: Padding(
                   padding: EdgeInsets.only(bottom: 80),
@@ -378,12 +416,12 @@ class _ContactSectionState extends State<ContactSection> {
               ),
               validator: (val) {
                 if (val == null || val.trim().isEmpty) {
-                  return "Please enter your message";
+                  return "Please enter project details";
                 }
                 return null;
               },
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 28),
 
             // Action Button
             ElevatedButton(
@@ -391,9 +429,9 @@ class _ContactSectionState extends State<ContactSection> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
-                  Icon(Icons.send, size: 16),
+                  Icon(Icons.copy_rounded, size: 16),
                   SizedBox(width: 10),
-                  Text("Send Message"),
+                  Text("Copy Project Brief for Upwork"),
                 ],
               ),
             ),

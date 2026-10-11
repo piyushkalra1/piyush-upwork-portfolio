@@ -152,6 +152,7 @@ class _MainPortfolioPageState extends State<MainPortfolioPage> {
                     ResumeSection(
                       key: _sectionKeys["Resume"],
                       onVisible: (frac) => _onSectionVisible("Resume", frac),
+                      onHirePressed: () => _scrollToSection("Contact"),
                     ),
                     AchievementsSection(
                       key: _sectionKeys["Achievements"],

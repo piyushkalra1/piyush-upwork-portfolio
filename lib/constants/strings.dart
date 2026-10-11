@@ -10,9 +10,7 @@ class AppStrings {
 
   // Social Links
   static const String githubUrl = "https://github.com/piyush-kalra";
-  static const String linkedinUrl = "https://linkedin.com/in/piyush-kumar-kalra";
-  static const String emailAddress = "piyush.kumar.kalra@gmail.com";
-  static const String phoneNumber = "+91 8949581867";
+  static const String platformStatus = "Available on Upwork";
 
   // Categories & Skills List
   static const Map<String, List<Map<String, dynamic>>> skillsData = {
@@ -98,6 +96,37 @@ class AppStrings {
 
   // Projects Configuration List
   static final List<ProjectModel> projectsList = [
+    ProjectModel(
+      id: "blb_librarian",
+      name: "BLB Librarian",
+      shortDescription: "Smart IoT & EdTech mobile library with NFC/RFID book scanning, parent-controlled Kiosk Safety mode, and multimedia learning.",
+      description: "BLB Librarian (Better Letter Book) is a next-generation Flutter IoT & EdTech mobile ecosystem bridging physical books with interactive digital media. Through real-time NFC/RFID tag scanning, physical books instantly trigger synchronized digital experiences including video, audio, stories, and games. Features a dedicated parent management system for 'Little Ones' with a secured Kiosk Safety Mode ensuring kids only access parent-curated content without leaving the sandbox. Includes cloud storage quotas, device pairing limits, and flexible subscription tiers.",
+      technologies: ["Flutter", "NFC / RFID", "Kiosk / Safety Mode", "Clean Architecture", "REST API", "Media Streaming", "Subscriptions"],
+      playStoreUrl: "",
+      features: [
+        "NFC & RFID Tag Scanning: Instant physical-to-digital book synchronization with tap detection",
+        "Kiosk & Safety Mode: Restrict interface access so children only view parent-approved books and media",
+        "Multi-Child Profile Management ('Little Ones'): Separate customizable spaces and playlists for each child",
+        "Interactive Multimedia Books: Alphabet (A-Z) and Number collections with synchronized audio, story narrations, and video",
+        "Cloud Media & Device Pairing: Real-time cloud storage monitoring and multi-device connection limits",
+        "Tiered Subscription & Billing: Seamless plan upgrades (Free, Family, Premium) with storage add-ons"
+      ],
+      screenshots: [
+        "assets/screenshots/blb/blb1.png",
+        "assets/screenshots/blb/blb2.png",
+        "assets/screenshots/blb/blb3.png",
+        "assets/screenshots/blb/blb4.png",
+        "assets/screenshots/blb/blb5.png",
+      ],
+      responsibilities: [
+        "Architected the app using Clean Architecture and responsive UI adapted for phones and tablets.",
+        "Integrated native NFC & RFID scanning protocols for instantaneous physical book detection.",
+        "Engineered the Kiosk Safety Mode sandbox to enforce parent-curated content boundaries.",
+        "Built dynamic multi-profile state management allowing parents to toggle and monitor child spaces.",
+        "Implemented cloud media streaming, storage quota tracking, and subscription billing state."
+      ],
+      accentHue: 265.0, // Purple-Violet Theme
+    ),
     ProjectModel(
       id: "dunnit",
       name: "Dunnit",
@@ -370,7 +399,7 @@ class AppStrings {
       "rating": 5.0,
       "source": "Clutch.co Verified Review",
       "sourceBadge": "Verified 5.0 ★ on Clutch",
-      "sourceUrl": "https://clutch.co/profile/inventcolabs",
+      "sourceUrl": "",
       "sourceIcon": "clutch",
       "project": "Dunnnit Wellness Platform (iOS & Android)",
     },
@@ -381,10 +410,10 @@ class AppStrings {
       "role": "Founder & Product Owner",
       "company": "Spelenderwijs Verbeteren • Netherlands",
       "rating": 5.0,
-      "source": "Instagram Video Reel",
-      "sourceBadge": "Watch Video Feedback ↗",
-      "sourceUrl": "https://www.instagram.com/reel/Daerh8kAkdn/?stkn=MTJpbXo0aDd2bHNqag==",
-      "sourceIcon": "instagram",
+      "source": "Client Video Feedback",
+      "sourceBadge": "Verified Client Video Feedback",
+      "sourceUrl": "",
+      "sourceIcon": "verified",
       "project": "Korfball Training & Management Platform",
     },
     {

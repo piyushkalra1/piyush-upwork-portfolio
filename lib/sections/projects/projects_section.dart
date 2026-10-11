@@ -353,21 +353,43 @@ class _ProjectDetailsDialogContentState extends State<_ProjectDetailsDialogConte
                   onPressed: () => Navigator.pop(context),
                   child: const Text("Close Details"),
                 ),
-                const SizedBox(width: 16),
-                ElevatedButton(
-                  onPressed: () => _launchUrl(project.playStoreUrl),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: color,
-                    foregroundColor: Colors.white,
+                if (project.playStoreUrl.isNotEmpty) ...[
+                  const SizedBox(width: 16),
+                  ElevatedButton(
+                    onPressed: () => _launchUrl(project.playStoreUrl),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: color,
+                      foregroundColor: Colors.white,
+                    ),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.play_arrow, size: 18),
+                        SizedBox(width: 8),
+                        Text("View on Play Store"),
+                      ],
+                    ),
                   ),
-                  child: Row(
-                    children: const [
-                      Icon(Icons.play_arrow, size: 18),
-                      SizedBox(width: 8),
-                      Text("View on Play Store"),
-                    ],
+                ] else ...[
+                  const SizedBox(width: 16),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: color.withOpacity(0.12),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: color.withOpacity(0.3), width: 1),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.verified, size: 16, color: color),
+                        const SizedBox(width: 6),
+                        Text(
+                          "Enterprise / Client App",
+                          style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 13),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                ],
               ],
             ),
           ),

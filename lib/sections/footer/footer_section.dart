@@ -158,10 +158,6 @@ class FooterSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         _buildIcon(Icons.code, AppStrings.githubUrl),
-        const SizedBox(width: 12),
-        _buildIcon(Icons.work_outline, AppStrings.linkedinUrl),
-        const SizedBox(width: 12),
-        _buildIcon(Icons.email_outlined, "mailto:${AppStrings.emailAddress}"),
       ],
     );
   }
