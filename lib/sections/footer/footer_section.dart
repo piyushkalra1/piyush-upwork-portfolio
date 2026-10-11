@@ -154,26 +154,16 @@ class FooterSection extends StatelessWidget {
   }
 
   Widget _buildSocials() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _buildIcon(Icons.code, AppStrings.githubUrl),
-      ],
-    );
-  }
-
-  Widget _buildIcon(IconData icon, String url) {
     return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.glassBg,
-        shape: BoxShape.circle,
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+      decoration: BoxDecoration(
+        color: AppColors.greenAccent.withOpacity(0.12),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.greenAccent.withOpacity(0.3), width: 1),
       ),
-      child: IconButton(
-        icon: Icon(icon, color: AppColors.textSecondary, size: 16),
-        onPressed: () => _launchUrl(url),
-        padding: const EdgeInsets.all(8),
-        constraints: const BoxConstraints(),
-        hoverColor: AppColors.primaryAccent.withOpacity(0.08),
+      child: const Text(
+        "Upwork Verified",
+        style: TextStyle(color: AppColors.greenAccent, fontSize: 11.5, fontWeight: FontWeight.bold),
       ),
     );
   }

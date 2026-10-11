@@ -466,10 +466,8 @@ class _HeroSectionState extends State<HeroSection> with SingleTickerProviderStat
     return Row(
       mainAxisAlignment: center ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: [
-        _buildSocialIcon(Icons.code, AppStrings.githubUrl, "GitHub"),
-        const SizedBox(width: 14),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             color: AppColors.greenAccent.withOpacity(0.12),
             borderRadius: BorderRadius.circular(20),
@@ -479,13 +477,13 @@ class _HeroSectionState extends State<HeroSection> with SingleTickerProviderStat
             mainAxisSize: MainAxisSize.min,
             children: const [
               Icon(Icons.verified, size: 16, color: AppColors.greenAccent),
-              SizedBox(width: 6),
+              SizedBox(width: 8),
               Text(
                 "Upwork Verified Freelancer",
                 style: TextStyle(
                   color: AppColors.greenAccent,
                   fontWeight: FontWeight.bold,
-                  fontSize: 12,
+                  fontSize: 12.5,
                 ),
               ),
             ],
@@ -493,33 +491,6 @@ class _HeroSectionState extends State<HeroSection> with SingleTickerProviderStat
         ),
       ],
     ).animate().fadeIn(delay: 750.ms, duration: 500.ms);
-  }
-
-  Widget _buildSocialIcon(IconData icon, String url, String tooltip) {
-    return Tooltip(
-      message: tooltip,
-      child: InkWell(
-        onTap: () => _launchUrl(url),
-        borderRadius: BorderRadius.circular(24),
-        child: Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-            color: AppColors.surfaceCard,
-            shape: BoxShape.circle,
-            border: Border.all(color: AppColors.borderLight, width: 1),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Icon(icon, color: AppColors.textSecondary, size: 19),
-        ),
-      ),
-    );
   }
 
   Widget _buildProfileImage(double imageSize) {
